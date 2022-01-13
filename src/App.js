@@ -24,7 +24,7 @@ const App = () => {
     }
   getData();
 
-   }, [])
+   }, [sites])
 
   useEffect(() => {
       const filteredSites = sites.filter((site) => search === "" || site.suburb === search)
