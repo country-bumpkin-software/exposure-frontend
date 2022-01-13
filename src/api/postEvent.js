@@ -13,12 +13,13 @@ const time_to = moment(data[5].value, "MMMM DDDo hhmm A").format('YYYY-MM-DDTHH:
 // 2022-01-01T05:40:00
 const posted = moment().format('YYYY-MM-DDTHH:mm:ss');
 console.log(place, suburb, postcode, time_to, time_from, posted);
+
 axios.post('https://exposure-api.onrender.com/events', 
 {
     "type": place,
     "address_line1": address,
     suburb,
-	postcode,
+	  postcode,
     "exposure_time_from": time_from,
     "exposure_time_to": time_to,
     "posted_time": posted

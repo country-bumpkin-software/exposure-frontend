@@ -326,3 +326,6 @@ p {
   padding:2rem
   
 }
+.filter-inputs {
+  display: flex
+}

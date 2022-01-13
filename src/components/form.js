@@ -2,7 +2,7 @@ import React ,{useState}from 'react';
 
 import { DateTimePicker } from '@material-ui/pickers'
 import postData from '../api/postEvent'
-const Form = () => {
+const Form = ({setSite, sites}) => {
     const [place, setPlace] = useState('');
     const [address, setAddress] = useState('');
     const [suburb, setSuburb] = useState('');
@@ -21,6 +21,10 @@ const Form = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         postData(e.target);
+        const newSite =  {type:place, address_line1: address, suburb, postcode, selectedDateFrom, selectedDateTo}
+        setSite((site)=> {
+            return [...site, newSite]
+        })
     }
 
     return (
