@@ -1,7 +1,9 @@
 import React ,{useState}from 'react';
 
-import { DateTimePicker } from '@material-ui/pickers'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import postData from '../api/postEvent'
+import MomentUtils from '@date-io/moment';
+
 const Form = ({setSite, sites}) => {
     const [place, setPlace] = useState('');
     const [address, setAddress] = useState('');
@@ -9,15 +11,17 @@ const Form = ({setSite, sites}) => {
     const [postcode, setPostcode] = useState('');
 
     const [selectedDateFrom, setSelectedDateFrom] = useState(new Date());
-    const handleDateFromChange = (date) => {
-        setSelectedDateFrom(date)
-      }
-
     const [selectedDateTo, setSelectedDateTo] = useState(new Date());
-    const handleDateToChange = (date) => {
-        console.log("handle time chanfge");
-        setSelectedDateTo(date)
-    }
+    
+    // const handleDateFromChange = (date) => {
+    //     console.log("handle date from change ", date);
+    //     setSelectedDateFrom(date)
+    //   }
+
+    // const handleDateToChange = (date) => {
+    //     console.log("handle date to change ", date);
+    //     setSelectedDateTo(date)
+    // }
     const handleSubmit = (e) => {
         e.preventDefault()
         postData(e.target);
@@ -59,12 +63,16 @@ const Form = ({setSite, sites}) => {
             
             <div className='form-control'>
             <label htmlFor='dateFrom'>Date from:</label>
-            <DateTimePicker value={selectedDateFrom} onChange={handleDateFromChange}/>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+            <DateTimePicker value={selectedDateFrom} onChange={setSelectedDateFrom}/>
+            </MuiPickersUtilsProvider>
             </div>
             
             <div className='form-control'>
             <label htmlFor='dateTo'>Date to:</label>
-            <DateTimePicker  value={selectedDateTo} onChange={handleDateToChange}/>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+            <DateTimePicker  value={selectedDateTo} onChange={setSelectedDateTo}/>
+            </MuiPickersUtilsProvider>
             </div>
             
             <div>
