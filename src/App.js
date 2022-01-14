@@ -24,17 +24,17 @@ const App = () => {
     }
   getData();
 
-   }, [sites])
+   }, [])
 
   useEffect(() => {
       const filteredSites = sites.filter((site) => search === "" || site.suburb === search)
       setSuburb(filteredSites)
-  }, [search, sites])
+  }, [search])
 
   useEffect(() => {
     const filteredSites = sites.filter((site) => searchPostcode === "" || site.postcode === searchPostcode)
     setSuburb(filteredSites)
-}, [searchPostcode, sites])
+}, [searchPostcode])
  
   return <>
   <MuiPickersUtilsProvider utils={MomentUtils}>
