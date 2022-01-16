@@ -20,7 +20,9 @@ const App = () => {
     async function getData() {
         const data = await fetchData();
         setSite(data)
-        setSuburb(data)
+        setSuburb(()=> {
+          return [...suburbs, sites]
+        })
     }
   getData();
 
@@ -29,12 +31,13 @@ const App = () => {
   useEffect(() => {
       const filteredSites = sites.filter((site) => search === "" || site.suburb === search)
       setSuburb(filteredSites)
-  }, [search])
+  }, [search, sites])
 
   useEffect(() => {
     const filteredSites = sites.filter((site) => searchPostcode === "" || site.postcode === searchPostcode)
     setSuburb(filteredSites)
 }, [searchPostcode])
+
  
   return <>
   <MuiPickersUtilsProvider utils={MomentUtils}>

@@ -3,6 +3,8 @@ import React ,{useState}from 'react';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import postData from '../api/postEvent'
 import MomentUtils from '@date-io/moment';
+import TextField from '@mui/material/TextField';
+import moment from 'moment'
 
 const Form = ({setSite, sites}) => {
     const [place, setPlace] = useState('');
@@ -13,9 +15,11 @@ const Form = ({setSite, sites}) => {
     const [selectedDateFrom, setSelectedDateFrom] = useState(new Date());
     const [selectedDateTo, setSelectedDateTo] = useState(new Date());
     
-    // const handleDateFromChange = (date) => {
+    // const handleDateFromChange = () => {
     //     console.log("handle date from change ", date);
-    //     setSelectedDateFrom(date)
+    //     setSelectedDateFrom(()=> {
+    //         {
+    //             setSelectedDateFrom(...selectedDateFrom, date)}})
     //   }
 
     // const handleDateToChange = (date) => {
@@ -25,9 +29,13 @@ const Form = ({setSite, sites}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         postData(e.target);
-        const newSite =  {type:place, address_line1: address, suburb, postcode, selectedDateFrom, selectedDateTo}
-        setSite((site)=> {
-            return [...site, newSite]
+        console.log("e", e);
+        const from = moment(e.target[4].value, "MMMM Do hh:mm a")
+        const to = moment(e.target[5].value, "MMMM Do hh:mm a")
+        console.log("from, to: ",from, to);
+        const newSite =  {type:place, address_line1: address, suburb, postcode, exposure_time_from: from, exposure_time_to:to}
+        setSite(()=> {
+            return [...sites, newSite]
         })
     }
 
@@ -64,14 +72,18 @@ const Form = ({setSite, sites}) => {
             <div className='form-control'>
             <label htmlFor='dateFrom'>Date from:</label>
             <MuiPickersUtilsProvider utils={MomentUtils}>
-            <DateTimePicker value={selectedDateFrom} onChange={setSelectedDateFrom}/>
+            <DateTimePicker  renderInput={(props) => <TextField {...props} />} value={selectedDateFrom} onChange={(newValue) => {
+          setSelectedDateFrom(newValue);
+        }}/>
             </MuiPickersUtilsProvider>
             </div>
             
             <div className='form-control'>
             <label htmlFor='dateTo'>Date to:</label>
             <MuiPickersUtilsProvider utils={MomentUtils}>
-            <DateTimePicker  value={selectedDateTo} onChange={setSelectedDateTo}/>
+            <DateTimePicker  renderInput={(props) => <TextField {...props} />} value={selectedDateTo} onChange={(newValue) => {
+          setSelectedDateTo(newValue);
+        }}/>
             </MuiPickersUtilsProvider>
             </div>
             
